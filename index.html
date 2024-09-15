@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rust WASM Website</title>
+</head>
+<body>
+    <h1>Hello from Rust + WebAssembly!</h1>
+    <button id="greet-btn">Greet from Rust</button>
+
+    <script type="module">
+        import init, { greet } from './pkg/rust_wasm_website.js';
+
+        async function run() {
+            await init();
+            document.getElementById('greet-btn').addEventListener('click', greet);
+        }
+
+        run();
+    </script>
+</body>
+</html>
