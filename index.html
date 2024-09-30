@@ -7,17 +7,36 @@
 </head>
 <body>
     <h1>Hello from Rust + WebAssembly!</h1>
+    <div id="greeting">Click the button to get a greeting!</div>
     <button id="greet-btn">Greet from Rust</button>
 
+    <div id="result"></div>
+
     <script type="module">
-        import init, { greet } from './pkg/rust_wasm_website.js';
+        import init, { greeting, add } from './pkg/rust_wasm_website.js';
 
         async function run() {
+             // Initialize the WASM module
             await init();
-            document.getElementById('greet-btn').addEventListener('click', greet);
+
+            const t = add(4, 23);
+
+            // Add event listener to the button
+            document.getElementById('greet-btn').addEventListener('click', () => {
+                // Call the Rust function when the button is clicked
+                const greeting = greeting("");
+
+                // Log the returned string to the console for debugging
+                console.log('Greeting from Rust:', greeting);
+
+                // Set the returned string in the div
+                document.getElementById('greeting').textContent = greeting;
+            });
+
+
         }
 
-        run();
+        run().catch(console.error);  // Ensure any errors are logged
     </script>
 </body>
 </html>
